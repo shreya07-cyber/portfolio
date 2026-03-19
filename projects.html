@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Shreya</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #060d1f;
+        --navy2: #0b1530;
+        --navy3: #111d3c;
+        --blue: #1a7fe8;
+        --blue2: #3b9aff;
+        --blue3: #6ab4ff;
+        --bluefog: rgba(26, 127, 232, 0.1);
+        --white: #f0f4ff;
+        --muted: #6880a8;
+        --muted2: #4a5e88;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(59, 154, 255, 0.18);
+        --gold: #fbbf24;
+        --green: #4ade80;
+        --pink: #f472b6;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--navy);
+        color: var(--white);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      #cur-dot {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--blue2);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+      }
+      #cur-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--blue3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        opacity: 0.5;
+        transition:
+          width 0.3s,
+          height 0.3s;
+      }
+      #bgc {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem 3rem;
+        background: rgba(6, 13, 31, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: -0.04em;
+      }
+      .nav-logo span {
+        color: var(--blue2);
+      }
+      .nav-center {
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-back {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+        cursor: none;
+        border: 1px solid var(--border);
+        padding: 0.35rem 0.8rem;
+        border-radius: 100px;
+      }
+      .nav-back:hover {
+        color: var(--blue2);
+        border-color: var(--border2);
+      }
+
+      .page-hero {
+        padding: 9rem 3rem 3.5rem;
+        max-width: 1160px;
+        margin: 0 auto;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        z-index: 2;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.2s forwards;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--blue3);
+        background: rgba(26, 127, 232, 0.08);
+        border: 1px solid var(--border2);
+        padding: 0.3rem 0.8rem;
+        border-radius: 100px;
+        margin-bottom: 1.2rem;
+      }
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: clamp(3rem, 6vw, 5rem);
+        letter-spacing: -0.05em;
+        line-height: 0.92;
+      }
+      h1 em {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        color: var(--blue2);
+      }
+
+      .container {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 3rem 6rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* FILTER BAR */
+      .filter-bar {
+        display: flex;
+        gap: 0.5rem;
+        margin: 3rem 0 2.5rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.5s 0.5s forwards;
+      }
+      .filter-btn {
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.38rem 1rem;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        cursor: none;
+        transition: all 0.2s;
+        border-radius: 100px;
+      }
+      .filter-btn.active,
+      .filter-btn:hover {
+        border-color: var(--border2);
+        color: var(--blue2);
+        background: rgba(26, 127, 232, 0.08);
+      }
+
+      /* PROJECTS GRID */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 1px;
+        background: var(--border);
+      }
+      .project-card {
+        background: var(--navy2);
+        padding: 2rem;
+        cursor: none;
+        transition: background 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--card-color, var(--blue2)),
+          transparent
+        );
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .project-card:hover::before {
+        transform: scaleX(1);
+      }
+      .project-card:hover {
+        background: var(--navy3);
+      }
+      .project-card.hidden {
+        display: none;
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.2rem;
+      }
+      .card-num {
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .badge {
+        font-size: 0.56rem;
+        padding: 0.2rem 0.7rem;
+        border-radius: 100px;
+        letter-spacing: 0.06em;
+      }
+      .b-gold {
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        color: var(--gold);
+      }
+      .b-blue {
+        background: rgba(26, 127, 232, 0.1);
+        border: 1px solid var(--border2);
+        color: var(--blue3);
+      }
+      .b-green {
+        background: rgba(74, 222, 128, 0.08);
+        border: 1px solid rgba(74, 222, 128, 0.25);
+        color: var(--green);
+      }
+      .b-pink {
+        background: rgba(244, 114, 182, 0.08);
+        border: 1px solid rgba(244, 114, 182, 0.25);
+        color: var(--pink);
+      }
+      .card-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.6rem;
+      }
+      .card-desc {
+        font-size: 0.76rem;
+        line-height: 1.72;
+        color: var(--muted);
+        margin-bottom: 1.1rem;
+      }
+      .card-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+      .stack-pill {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.55rem;
+        border: 1px solid var(--border);
+        color: var(--muted2);
+        border-radius: 4px;
+      }
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.4rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+      .card-actions {
+        display: flex;
+        gap: 1rem;
+      }
+      .card-btn {
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        background: none;
+        border: none;
+        cursor: none;
+        font-family: "DM Sans", sans-serif;
+        transition: color 0.2s;
+      }
+      .card-btn:hover {
+        color: var(--blue2);
+      }
+      .card-arrow {
+        font-size: 1rem;
+        color: var(--muted2);
+        transition:
+          transform 0.25s,
+          color 0.25s;
+      }
+      .project-card:hover .card-arrow {
+        transform: translate(3px, -3px);
+        color: var(--blue2);
+      }
+
+      /* MODAL */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 13, 31, 0.96);
+        z-index: 500;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        backdrop-filter: blur(12px);
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -46%);
+        width: min(680px, 92vw);
+        max-height: 84vh;
+        overflow-y: auto;
+        background: var(--navy2);
+        border: 1px solid var(--border2);
+        z-index: 501;
+        padding: 2.5rem;
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.3s;
+        opacity: 0;
+        border-radius: 2px;
+      }
+      .modal-overlay.open .modal {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+      .modal-close {
+        position: absolute;
+        top: 1.4rem;
+        right: 1.4rem;
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 1.1rem;
+        cursor: none;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--white);
+      }
+      .modal-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.6rem;
+        letter-spacing: -0.04em;
+        margin: 1rem 0 0.4rem;
+      }
+      .modal-sub {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        letter-spacing: 0.02em;
+      }
+      .modal-section {
+        margin-bottom: 1.4rem;
+      }
+      .modal-section h4 {
+        font-size: 0.56rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--blue);
+        margin-bottom: 0.6rem;
+        font-family: "Syne", sans-serif;
+      }
+      .modal-section p {
+        font-size: 0.76rem;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .modal-section ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .modal-section ul li {
+        font-size: 0.76rem;
+        color: var(--muted);
+        padding-left: 1.1rem;
+        position: relative;
+      }
+      .modal-section ul li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--blue2);
+        font-size: 0.7rem;
+      }
+      .modal-footer {
+        display: flex;
+        gap: 0.8rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+      .modal-btn {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.6rem 1.4rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: none;
+        font-family: "DM Sans", sans-serif;
+        border-radius: 100px;
+      }
+      .modal-btn-primary {
+        background: var(--blue);
+        color: #fff;
+        border: 1px solid var(--blue);
+      }
+      .modal-btn-primary:hover {
+        background: var(--blue2);
+      }
+      .modal-btn-outline {
+        border: 1px solid var(--border2);
+        color: var(--muted);
+      }
+      .modal-btn-outline:hover {
+        color: var(--blue2);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.5s,
+          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .page-footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+      .page-footer p {
+        font-size: 0.58rem;
+        color: var(--muted2);
+      }
+      .foot-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .foot-links a {
+        font-size: 0.58rem;
+        color: var(--muted2);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+        cursor: none;
+      }
+      .foot-links a:hover {
+        color: var(--blue2);
+      }
+      @media (max-width: 900px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .page-hero,
+        .container {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .modal {
+          padding: 1.5rem;
+        }
+        .page-footer {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+    <canvas id="bgc"></canvas>
+
+    <nav>
+      <a class="nav-logo" href="index.html">S<span>.</span></a>
+      <span class="nav-center">03 / Projects</span>
+      <a class="nav-back" href="index.html">← Home</a>
+    </nav>
+
+    <div class="page-hero">
+      <span class="hero-tag">9 Real-World Builds</span>
+      <h1>What I've <em>built.</em></h1>
+    </div>
+
+    <div class="container">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All (9)</button>
+        <button class="filter-btn" data-filter="ai">AI / CV</button>
+        <button class="filter-btn" data-filter="java">Java / DSA</button>
+        <button class="filter-btn" data-filter="iot">IoT / Hardware</button>
+        <button class="filter-btn" data-filter="award">🏆 Awarded</button>
+      </div>
+
+      <div class="projects-grid reveal" id="projectsGrid">
+        <div
+          class="project-card"
+          data-cats="iot award"
+          style="--card-color: #fbbf24"
+          data-project="0"
+        >
+          <div class="card-top">
+            <span class="card-num">01</span
+            ><span class="badge b-gold">🏆 AIR 3 · ₹50,000</span>
+          </div>
+          <h3 class="card-title">Safe Siding of Train System</h3>
+          <p class="card-desc">
+            Real-time railway safety monitoring using RFID and GPS. Awarded All
+            India Rank 3 at Wabtec Exceed 3.0.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Arduino</span
+            ><span class="stack-pill">Python</span
+            ><span class="stack-pill">RFID</span
+            ><span class="stack-pill">GPS</span
+            ><span class="stack-pill">Matplotlib</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(0)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/safe-siding-of-train/tree/main"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="java award"
+          style="--card-color: #fbbf24"
+          data-project="1"
+        >
+          <div class="card-top">
+            <span class="card-num">02</span
+            ><span class="badge b-gold">🏆 1st Place · Buffer Hackathon</span>
+          </div>
+          <h3 class="card-title">
+            SmartSpend — CLI Expense &amp; Budget Manager
+          </h3>
+          <p class="card-desc">
+            DSA-driven CLI app with two modules — personal budgeting (Trie,
+            Segment Tree, Max Heap, TreeMap) and group trip settlement (Graph +
+            Greedy cash-flow minimisation). Zero databases, fully in-memory.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Java</span
+            ><span class="stack-pill">Trie</span
+            ><span class="stack-pill">Segment Tree</span
+            ><span class="stack-pill">Adjacency Matrix</span
+            ><span class="stack-pill">BST</span
+            ><span class="stack-pill">Max Heap</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(1)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/Buffer-6.0"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="ai"
+          style="--card-color: #f472b6"
+          data-project="2"
+        >
+          <div class="card-top">
+            <span class="card-num">03</span
+            ><span class="badge b-pink">AI · Computer Vision</span>
+          </div>
+          <h3 class="card-title">Helmet &amp; Number Plate Detection</h3>
+          <p class="card-desc">
+            YOLO-based traffic violation detection — identifies helmetless
+            riders and auto-generates penalty notifications.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Python</span
+            ><span class="stack-pill">YOLO</span
+            ><span class="stack-pill">OpenCV</span
+            ><span class="stack-pill">Image Processing</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(2)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/Helmet-Number-Plate-Detection-System-using-YOLOv8/tree/main"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="ai"
+          style="--card-color: #3b9aff"
+          data-project="3"
+        >
+          <div class="card-top">
+            <span class="card-num">04</span
+            ><span class="badge b-blue">Python · Flask · MySQL</span>
+          </div>
+          <h3 class="card-title">Smart Parking Management System</h3>
+          <p class="card-desc">
+            Full-stack parking system with QR-based entry/exit, auto slot
+            allocation across 350 slots (5 zones), dynamic fee + penalty
+            calculation, Tkinter admin dashboard, and CSV export.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Python</span
+            ><span class="stack-pill">Flask</span
+            ><span class="stack-pill">MySQL</span
+            ><span class="stack-pill">Tkinter</span
+            ><span class="stack-pill">QR Code</span
+            ><span class="stack-pill">Matplotlib</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(3)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/smart-parking-system"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="ai"
+          style="--card-color: #4ade80"
+          data-project="4"
+        >
+          <div class="card-top">
+            <span class="card-num">05</span
+            ><span class="badge b-green">Machine Learning</span>
+          </div>
+          <h3 class="card-title">Hybrid Movie Recommendation System</h3>
+          <p class="card-desc">
+            Combines TF-IDF content-based filtering, collaborative filtering,
+            mood-based filtering, and group recommendations.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Python</span
+            ><span class="stack-pill">TF-IDF</span
+            ><span class="stack-pill">Cosine Similarity</span
+            ><span class="stack-pill">ML</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(4)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/Group-Movie-Recommendation-System"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="java"
+          style="--card-color: #3b9aff"
+          data-project="5"
+        >
+          <div class="card-top">
+            <span class="card-num">06</span
+            ><span class="badge b-blue">Healthcare · DB</span>
+          </div>
+          <h3 class="card-title">Pharmacy Inventory Tracker</h3>
+          <p class="card-desc">
+            Real-time medicine inventory for 5000+ medicines with low-stock
+            alerts, stock optimization, and location-based search.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Java</span
+            ><span class="stack-pill">MySQL</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(5)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/inventory-management"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="java"
+          style="--card-color: #3b9aff"
+          data-project="6"
+        >
+          <div class="card-top">
+            <span class="card-num">07</span
+            ><span class="badge b-blue">Backend · DB</span>
+          </div>
+          <h3 class="card-title">E-commerce Recommendation Engine</h3>
+          <p class="card-desc">
+            Personalized product recommendation with budget-based filtering,
+            dynamic shopping cart, and purchase history via JDBC.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Java</span
+            ><span class="stack-pill">JDBC</span
+            ><span class="stack-pill">MySQL</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(6)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/E-Commerce-Management-System-D-MART-App-/tree/main"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="java"
+          style="--card-color: #3b9aff"
+          data-project="7"
+        >
+          <div class="card-top">
+            <span class="card-num">08</span
+            ><span class="badge b-blue">Automation</span>
+          </div>
+          <h3 class="card-title">Automated Teacher Absence System</h3>
+          <p class="card-desc">
+            Smart scheduling that auto-assigns substitute teachers on absences,
+            preventing timetable conflicts and reducing admin workload.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Java</span
+            ><span class="stack-pill">Scheduling Algorithms</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(7)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/Automated-Teacher-Absence-System"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+        <div
+          class="project-card"
+          data-cats="iot"
+          style="--card-color: #4ade80"
+          data-project="8"
+        >
+          <div class="card-top">
+            <span class="card-num">09</span
+            ><span class="badge b-green">IoT · Embedded Systems</span>
+          </div>
+          <h3 class="card-title">Smart Metro Gate System</h3>
+          <p class="card-desc">
+            Hardware–software simulation of automated metro ticketing. RFID
+            authenticates passengers, servo motor controls gate, LCD + LED +
+            buzzer provide feedback.
+          </p>
+          <div class="card-stack">
+            <span class="stack-pill">Arduino</span
+            ><span class="stack-pill">RFID MFRC522</span
+            ><span class="stack-pill">Servo Motor</span
+            ><span class="stack-pill">I2C LCD</span
+            ><span class="stack-pill">Embedded C</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-actions">
+              <button class="card-btn" onclick="openModal(8)">Details</button
+              ><a
+                class="card-btn"
+                href="https://github.com/shreya07-cyber/Automated-Metro-Ticketing-System/tree/main"
+                target="_blank"
+                >GitHub →</a
+              >
+            </div>
+            <span class="card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+      <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <p>© 2026 Shreya · All rights reserved</p>
+      <div class="foot-links">
+        <a href="about.html" target="_blank">About →</a>
+        <a href="achievements.html" target="_blank">Awards →</a>
+        <a href="contact.html" target="_blank">Contact →</a>
+      </div>
+    </footer>
+
+    <script>
+      const dot = document.getElementById("cur-dot"),
+        ring = document.getElementById("cur-ring");
+      let mx = window.innerWidth / 2,
+        my = window.innerHeight / 2,
+        rx = mx,
+        ry = my;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      (function loop() {
+        dot.style.left = mx + "px";
+        dot.style.top = my + "px";
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(loop);
+      })();
+
+      const canvas = document.getElementById("bgc"),
+        ctx = canvas.getContext("2d");
+      let W, H;
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const pts = Array.from({ length: 45 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        r: Math.random() * 1.1 + 0.3,
+        opacity: Math.random() * 0.35 + 0.08,
+      }));
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#060d1f");
+        bg.addColorStop(1, "#080f24");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = "rgba(255,255,255,0.016)";
+        ctx.lineWidth = 0.5;
+        for (let x = 0; x < W; x += 80) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, H);
+          ctx.stroke();
+        }
+        for (let y = 0; y < H; y += 80) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(W, y);
+          ctx.stroke();
+        }
+        pts.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59,154,255,${p.opacity})`;
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      const io = new IntersectionObserver(
+        (e) =>
+          e.forEach((x) => {
+            if (x.isIntersecting) {
+              x.target.classList.add("visible");
+              io.unobserve(x.target);
+            }
+          }),
+        { threshold: 0.08 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const f = btn.dataset.filter;
+          document.querySelectorAll(".project-card").forEach((card) => {
+            const cats = card.dataset.cats || "";
+            card.classList.toggle("hidden", f !== "all" && !cats.includes(f));
+          });
+        });
+      });
+
+      const projects = [
+        {
+          title: "Safe Siding of Train System",
+          badge: "🏆 AIR 3 · ₹50,000 Prize",
+          sub: "Arduino · Python · RFID · GPS · Matplotlib",
+          github:
+            "https://github.com/shreya07-cyber/safe-siding-of-train/tree/main",
+          overview:
+            "Real-time train monitoring system for railway safety using RFID and GPS. Tracks train movement at siding points to reduce human errors.",
+          problem:
+            "Manual monitoring of train movement causes operational errors and safety risks. This system automates tracking to eliminate human error.",
+          features: [
+            "Real-time train tracking using RFID readers",
+            "GPS-based location monitoring",
+            "Python visualization with Matplotlib",
+            "Automated siding conflict alerts",
+          ],
+          workflow:
+            "RFID detects train → GPS logs position → Python processes data → Visualized → Alert if conflict",
+          contribution:
+            "Integrated RFID tracking, Python visualization, designed safety monitoring workflow.",
+          future:
+            "Central railway command integration, cloud dashboard, predictive collision prevention.",
+        },
+        {
+          title: "SmartSpend — CLI Expense & Budget Manager",
+          badge: "🏆 1st Place · Buffer Hackathon 3.0",
+          sub: "Java · Trie · Deque · Segment Tree · TreeMap · Max Heap · BST · Adjacency Matrix · Greedy",
+          github: "https://github.com/shreya07-cyber/Buffer-6.0",
+          overview:
+            "SmartSpend is a DSA-driven command-line application for managing shared group expenses, personal budgeting, and trip settlements — entirely in-memory with no databases or GUI. Split into two core modules: a Budgeting Module and a Split & Trip Module.",
+          problem:
+            "Managing personal finances and group trip expenses manually is error-prone and slow. SmartSpend applies real DSA to solve these everyday problems efficiently with O(log n) operations and minimal memory overhead.",
+          features: [
+            "Deque for fast front/back transaction history retrieval",
+            "Trie for prefix-based auto-categorisation of transactions by description keyword",
+            "HashMap for category-wise budget allocation and real-time expenditure tracking",
+            "Zero-Based Budget Allocation — every unit of income mapped to a specific category",
+            "Max Heap (Priority Queue) for instant visibility into highest-spending categories",
+            "TreeMap + Sliding Window for monthly budget forecasting based on last 3 months of data",
+            "Segment Tree for O(log n) range-sum queries across any date range",
+            "BST for sorted contact management in the Split module (insert, delete, lookup by name)",
+            "Directed Graph via Adjacency Matrix to represent debt relationships among group members",
+            "Greedy cash-flow minimisation algorithm to reduce total transactions needed to settle a trip",
+          ],
+          workflow:
+            "Budgeting: Add transaction → Trie categorises → HashMap updates → Segment Tree indexes → Max Heap reorders → TreeMap forecasts. Trip Settlement: Add contacts (BST) → Record group expenses (HashMap + ArrayList) → Build debt graph (Adjacency Matrix) → Apply Greedy minimisation → Print minimal settlement plan.",
+          contribution:
+            "Designed full dual-module architecture. Implemented all data structures from scratch in Java — Trie, Segment Tree, BST, Max Heap, Adjacency Matrix graph, and the Greedy debt-minimisation algorithm. Built the complete CLI interface.",
+          future:
+            "Web dashboard for visual budget tracking, persistent storage via file I/O or SQLite, multi-currency support, UPI/bank API integration for automatic transaction import.",
+        },
+        {
+          title: "Helmet & Number Plate Detection",
+          badge: "AI · Computer Vision · Traffic Safety",
+          sub: "Python · YOLO · OpenCV · Image Processing",
+          github:
+            "https://github.com/shreya07-cyber/Helmet-Number-Plate-Detection-System-using-YOLOv8/tree/main",
+          overview:
+            "Traffic violation detection using YOLO to identify helmetless riders vehicle registration data.",
+          problem:
+            "Road safety violations are difficult to monitor manually at scale.",
+          features: [
+            "YOLO-based real-time helmet detection",
+            "Number plate extraction via OpenCV",
+            "Registration database matching",
+            "Automatic penalty generation",
+          ],
+          workflow:
+            "Camera → YOLO detects violation → OpenCV extracts plate → DB lookup → Fine issued",
+          contribution:
+            "YOLO model integration, number plate pipeline, violation detection logic.",
+          future:
+            "City traffic system integration, cloud dashboard, real-time analytics.",
+        },
+        {
+          title: "Smart Parking Management System",
+          badge: "Python · Flask · MySQL · Tkinter · QR Code",
+          sub: "Python · Flask · MySQL · Tkinter · QR Code · Matplotlib · CSV",
+          github: "https://github.com/shreya07-cyber/smart-parking-system",
+          overview:
+            "A full-stack Smart Parking Management System that streamlines vehicle entry, exit, payment, and admin monitoring. Built with two Flask web apps for entry/exit, a Tkinter admin dashboard, and MySQL for all data — backed by auto-generated QR codes for a touchless experience.",
+          problem:
+            "Traditional parking lots rely on manual supervision — causing delays, billing errors, and no real-time visibility into slot availability. This system fully automates the process from entry to exit.",
+          features: [
+            "QR-based touchless entry and exit — unique QR per user generated on registration",
+            "Automatic slot allocation across 5 zones (A–E) and 350 slots based on vehicle type",
+            "Dynamic fee calculation: ₹10/hr (two-wheeler) and ₹30/hr (four-wheeler) with per-hour penalties for overstay",
+            "Password-protected Tkinter admin dashboard with live metrics, charts, and manual controls",
+            "Real-time slot availability bar chart using Matplotlib",
+            "Search by Vehicle No, User ID, or Slot Number",
+            "Export parking records as CSV for any date range",
+            "Force-exit and manual slot block/free controls for admin",
+          ],
+          schema:
+            "Two tables — parking_users (user_id, name, vehicle_no, vehicle_type, slot_allocated, entry_time, exit_time, total_charge, paid, status) and parking_slots (slot, zone, vehicle_type, status). Zones A/B/C = Two-Wheelers (150 slots), Zones D/E = Four-Wheelers (200 slots).",
+          workflow:
+            "Entry: User scans entry QR → fills registration form → slot auto-allocated by zone → personal QR generated → entry_time stored in MySQL. Exit: User scans exit QR → enters User ID → system fetches entry time → calculates charge + penalty → payment confirmed → slot freed → record updated.",
+          contribution:
+            "Designed the full system architecture across 3 separate applications (Entry Flask app, Exit Flask app, Admin Tkinter dashboard). Built MySQL schema, slot allocation logic, QR code generation, fee/penalty calculator, all admin dashboard features including charts and CSV export.",
+          structure:
+            "python_project/ → Entry/app.py (Flask, port 5000) · Exit/app.py (Flask, port 5002) · admin.py (Tkinter GUI) · MySQL: parking_system DB",
+          future:
+            "Real payment gateway integration (Razorpay/UPI), license plate recognition via OpenCV, mobile app for drivers, cloud deployment, automated barrier/boom gate control via IoT.",
+        },
+        {
+          title: "Hybrid Movie Recommendation System",
+          badge: "Machine Learning · NLP",
+          sub: "Python · TF-IDF · Cosine Similarity · Collaborative Filtering",
+          github:
+            "https://github.com/shreya07-cyber/Group-Movie-Recommendation-System",
+          overview:
+            "Recommendation system combining content-based filtering, collaborative filtering, mood-based filtering, and group recommendations.",
+          problem:
+            "Single-strategy recommendation systems lead to repetitive or irrelevant suggestions.",
+          features: [
+            "TF-IDF content-based filtering",
+            "Collaborative filtering from ratings",
+            "Mood-based recommendation",
+            "Group recommendation for multiple users",
+          ],
+          workflow:
+            "Dataset → TF-IDF → Cosine similarity → Mood filter → Collaborative merge → Ranked list",
+          contribution:
+            "TF-IDF scoring, hybrid system design, group recommendations.",
+          future: "Deep learning models, streaming platform integration.",
+        },
+        {
+          title: "Pharmacy Inventory Tracker",
+          badge: "Healthcare · Database Management",
+          sub: "Java · MySQL",
+          github: "https://github.com/shreya07-cyber/inventory-management",
+
+          overview:
+            "Real-time medicine inventory for pharmacies managing 5000+ medicines with automated alerts and location-based search.",
+          problem:
+            "Manual inventory causes stock shortages, expired medicines, and inefficient record keeping.",
+          features: [
+            "Real-time tracking for 5000+ medicines",
+            "Automated low-stock alerts",
+            "Predictive stock optimization",
+            "Location-based pharmacy search",
+          ],
+          workflow:
+            "Medicine DB → Stock monitoring → Low-stock alert → Customer location search",
+          contribution:
+            "MySQL schema, Java inventory logic, alert system and location search.",
+          impact:
+            "~30% reduction in manual workload, improved medicine availability.",
+          future:
+            "Billing integration, mobile app, AI demand forecasting, expiry tracking.",
+        },
+        {
+          title: "E-commerce Recommendation Engine",
+          badge: "Backend · Database",
+          sub: "Java · JDBC · MySQL",
+          github:
+            "https://github.com/shreya07-cyber/E-Commerce-Management-System-D-MART-App-/tree/main",
+          overview:
+            "Personalized product recommendation with budget-based filtering, dynamic cart, and full purchase history management.",
+          problem:
+            "Online shoppers overwhelmed by product choices need personalized filtering.",
+          features: [
+            "Personalized recommendation engine",
+            "Budget-based product filtering",
+            "Dynamic shopping cart",
+            "Purchase history in DB",
+          ],
+          workflow:
+            "User preferences + budget → Filter products → Recommendations → Cart update → Purchase stored",
+          contribution:
+            "Recommendation logic in Java, JDBC integration, MySQL schema.",
+          future: "Deep learning recommendations, real-time inventory sync.",
+        },
+        {
+          title: "Automated Teacher Absence System",
+          badge: "Automation · Scheduling",
+          sub: "Java · Scheduling Algorithms",
+          github:
+            "https://github.com/shreya07-cyber/Automated-Teacher-Absence-System",
+          overview:
+            "Intelligent system detecting teacher absences and automatically assigning the most suitable substitute, preventing timetable conflicts.",
+          problem:
+            "Manual proxy allocation in schools causes scheduling conflicts and delays.",
+          features: [
+            "Automatic absence detection",
+            "Smart substitute assignment",
+            "Conflict prevention",
+            "Real-time timetable adjustment",
+          ],
+          workflow:
+            "Absence detected → Find available teacher → Check conflicts → Assign → Update timetable",
+          contribution:
+            "Scheduling logic, conflict-free proxy allocation algorithm.",
+          future:
+            "Web interface, attendance integration, SMS/email notifications.",
+        },
+        {
+          title: "Smart Metro Gate System (RFID Ticket Simulation)",
+          badge: "IoT · Embedded Systems · Hardware",
+          sub: "Arduino · RFID MFRC522 · Servo Motor · 16×2 I2C LCD · Embedded C",
+          github:
+            "https://github.com/shreya07-cyber/Automated-Metro-Ticketing-System/tree/main",
+          overview:
+            "Hardware–software simulation of automated metro ticketing and access control. Authenticates via RFID, controls gate with servo motor, provides visual and audio feedback.",
+          problem:
+            "Traditional ticketing requires manual verification causing queues. This simulates a fully automated gate.",
+          features: [
+            "RFID-based passenger authentication (MFRC522)",
+            "Automated gate via SG90 servo motor",
+            "16×2 I2C LCD for access messages",
+            "Green/Red LED status indicators",
+            "Active piezo buzzer for audio alerts",
+            "Push button simulation mode for testing",
+          ],
+          workflow:
+            'Scan card → MFRC522 reads UID → Arduino verifies → Valid: Green LED + gate opens + "Access Granted" / Invalid: Red LED + buzzer + "Access Denied"',
+          contribution:
+            "Full embedded system architecture, RFID integration, authentication logic, servo gate control, all feedback systems, testing.",
+          hardware:
+            "Arduino Uno · MFRC522 · SG90 Servo · 16×2 I2C LCD · Piezo Buzzer · LEDs · Push Buttons",
+          applications:
+            "Metro ticketing · Office access control · Campus entry · Smart parking · Public transport automation",
+          future:
+            "Online payment, mobile QR ticketing, cloud DB, IoT monitoring, NFC smartphone support.",
+        },
+      ];
+
+      function openModal(i) {
+        const p = projects[i];
+        document.getElementById("modalContent").innerHTML = `
+    <div style="margin-bottom:.8rem"><span class="badge b-blue">${p.badge}</span></div>
+    <div class="modal-title">${p.title}</div>
+    <div class="modal-sub">${p.sub}</div>
+    <div class="modal-section"><h4>Overview</h4><p>${p.overview}</p></div>
+    <div class="modal-section"><h4>Problem</h4><p>${p.problem}</p></div>
+    <div class="modal-section"><h4>Key Features</h4><ul>${p.features.map((f) => `<li>${f}</li>`).join("")}</ul></div>
+    <div class="modal-section"><h4>Workflow</h4><p>${p.workflow}</p></div>
+    <div class="modal-section"><h4>My Contribution</h4><p>${p.contribution}</p></div>
+    ${p.schema ? `<div class="modal-section"><h4>Database Schema</h4><p>${p.schema}</p></div>` : ""}
+    ${p.structure ? `<div class="modal-section"><h4>Project Structure</h4><p>${p.structure}</p></div>` : ""}
+    ${p.hardware ? `<div class="modal-section"><h4>Hardware Used</h4><p>${p.hardware}</p></div>` : ""}
+    ${p.impact ? `<div class="modal-section"><h4>Impact</h4><p>${p.impact}</p></div>` : ""}
+    ${p.applications ? `<div class="modal-section"><h4>Real-World Applications</h4><p>${p.applications}</p></div>` : ""}
+    <div class="modal-section"><h4>Future Plans</h4><p>${p.future}</p></div>
+    <div class="modal-footer">
+      <a href="${p.github || "#"}" class="modal-btn modal-btn-primary" target="_blank">View on GitHub →</a>
+      <button class="modal-btn modal-btn-outline" onclick="closeModal()">Close</button>
+    </div>`;
+        document.getElementById("modalOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal(e) {
+        if (!e || e.target === document.getElementById("modalOverlay")) {
+          document.getElementById("modalOverlay").classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Shreya</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#060d1f;--navy2:#0b1530;--navy3:#111d3c;--blue:#1a7fe8;--blue2:#3b9aff;--blue3:#6ab4ff;--bluefog:rgba(26,127,232,0.1);--white:#f0f4ff;--muted:#6880a8;--muted2:#4a5e88;--border:rgba(255,255,255,0.07);--border2:rgba(59,154,255,0.18);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
+#cur-dot{position:fixed;width:8px;height:8px;background:var(--blue2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s;}
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(6,13,31,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--white);text-decoration:none;letter-spacing:-0.04em;}
+.nav-logo span{color:var(--blue2);}
+.nav-center{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
+.nav-back{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;cursor:none;border:1px solid var(--border);padding:0.35rem 0.8rem;border-radius:100px;}
+.nav-back:hover{color:var(--blue2);border-color:var(--border2);}
+
+/* PAGE HERO */
+.page-hero{padding:9rem 3rem 3.5rem;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;border-bottom:1px solid var(--border);position:relative;z-index:2;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue3);background:rgba(26,127,232,0.08);border:1px solid var(--border2);padding:0.3rem 0.8rem;border-radius:100px;margin-bottom:1.2rem;opacity:0;animation:fadeUp .5s .2s forwards;}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5rem);letter-spacing:-0.05em;line-height:.92;opacity:0;animation:fadeUp .7s .35s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-name em{font-family:'Playfair Display',serif;font-style:italic;color:var(--blue2);display:block;}
+.hero-right{opacity:0;animation:fadeUp .6s .5s forwards;padding-bottom:.5rem;}
+.hero-title{font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.6rem;line-height:1.5;}
+.hero-bio{font-size:.82rem;line-height:1.85;color:var(--muted);margin-bottom:1.4rem;}
+.hero-chips{display:flex;flex-wrap:wrap;gap:.4rem;}
+.chip{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue3);background:rgba(26,127,232,0.08);border:1px solid rgba(59,154,255,0.2);padding:.28rem .7rem;border-radius:100px;}
+
+/* CONTAINER */
+.container{max-width:1160px;margin:0 auto;padding:0 3rem 6rem;position:relative;z-index:2;}
+
+/* SECTION */
+.sec-wrap{padding-top:4.5rem;}
+.sec-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.sec-num{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-family:'Syne',sans-serif;font-weight:700;}
+.sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;color:var(--white);}
+
+/* FACTS GRID */
+.facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.fact-cell{background:var(--navy2);padding:1.4rem 1.5rem;transition:background .2s;}
+.fact-cell:hover{background:var(--navy3);}
+.fact-lbl{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:block;}
+.fact-val{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--white);line-height:1.3;}
+.fact-val.blue{color:var(--blue2);}
+.fact-val.green{color:#4ade80;}
+
+/* EDU */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.edu-card{background:var(--navy2);border:1px solid var(--border);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s;}
+.edu-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(26,127,232,0.1);}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue3));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.edu-card:hover::before{transform:scaleX(1);}
+.edu-card.school::before{background:linear-gradient(90deg,#4ade80,#22d3ee);}
+.edu-card.school:hover{border-color:rgba(74,222,128,.25);}
+.edu-icon{width:2.2rem;height:2.2rem;background:rgba(26,127,232,0.12);border:1px solid var(--border2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:1.2rem;}
+.edu-card.school .edu-icon{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.2);}
+.edu-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;letter-spacing:-.02em;margin-bottom:.3rem;line-height:1.3;}
+.edu-college{font-size:.78rem;color:var(--muted);margin-bottom:1rem;}
+.edu-meta-row{display:flex;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.mlbl{font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);display:block;margin-bottom:.2rem;}
+.mval{font-size:.82rem;font-weight:600;color:var(--white);}
+.mval.cgpa{font-family:'Syne',sans-serif;font-size:1.2rem;color:var(--blue2);}
+.cw-label{font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;display:block;}
+.cw-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.cw-tag{font-size:.65rem;padding:.22rem .6rem;background:var(--navy3);border:1px solid var(--border);color:var(--muted);border-radius:4px;transition:border-color .2s,color .2s;}
+.edu-card:hover .cw-tag{border-color:var(--border2);color:var(--blue3);}
+.school-note{font-size:.76rem;line-height:1.8;color:var(--muted);margin-bottom:1.2rem;}
+
+/* TIMELINE */
+.timeline{position:relative;}
+.timeline::before{content:'';position:absolute;left:5rem;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--blue2),rgba(59,154,255,.05));}
+.tl-item{display:grid;grid-template-columns:4.5rem 1fr;gap:2rem;padding:1.8rem 0;border-bottom:1px solid var(--border);position:relative;}
+.tl-item:last-child{border-bottom:none;}
+.tl-item::before{content:'';position:absolute;left:calc(5rem - 4px);top:2.2rem;width:9px;height:9px;border-radius:50%;background:var(--navy2);border:2px solid var(--blue);transition:background .25s,transform .25s,box-shadow .25s;}
+.tl-item:hover::before{background:var(--blue2);transform:scale(1.4);box-shadow:0 0 10px rgba(59,154,255,.5);}
+.tl-year{font-size:.6rem;letter-spacing:.1em;color:var(--muted);text-align:right;padding-top:.25rem;line-height:1.6;}
+.tl-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;color:var(--white);margin-bottom:.35rem;}
+.tl-desc{font-size:.76rem;line-height:1.75;color:var(--muted);}
+.tl-badge{display:inline-flex;align-items:center;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:100px;margin-top:.5rem;}
+.tb-blue{background:rgba(26,127,232,.1);border:1px solid var(--border2);color:var(--blue3);}
+.tb-green{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);color:#4ade80;}
+.tb-gold{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fbbf24;}
+
+/* LANGUAGES */
+.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.lang-cell{background:var(--navy2);padding:1.6rem;transition:background .2s;}
+.lang-cell:hover{background:var(--navy3);}
+.lang-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.25rem;}
+.lang-level{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.9rem;}
+.lang-track{height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
+.lang-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue3));border-radius:1px;width:0;transition:width 1.3s cubic-bezier(.16,1,.3,1);}
+.lang-cell.visible .lang-fill{width:var(--w);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:none;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* FOOTER */
+.page-footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;}
+.page-footer p{font-size:.58rem;color:var(--muted2);}
+.foot-links{display:flex;gap:1.5rem;}
+.foot-links a{font-size:.58rem;color:var(--muted2);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;cursor:none;}
+.foot-links a:hover{color:var(--blue2);}
+
+@media(max-width:900px){nav{padding:1rem 1.5rem;}.page-hero{grid-template-columns:1fr;gap:2rem;padding:7rem 1.5rem 2.5rem;}.container{padding-left:1.5rem;padding-right:1.5rem;}.facts-grid{grid-template-columns:1fr 1fr;}.edu-grid{grid-template-columns:1fr;}.lang-grid{grid-template-columns:1fr 1fr;}.timeline::before{left:3.5rem;}.tl-item{grid-template-columns:3rem 1fr;}.tl-item::before{left:calc(3.5rem - 4px);}.page-footer{flex-direction:column;gap:1rem;text-align:center;}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<canvas id="bgc"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html">S<span>.</span></a>
+  <span class="nav-center">01 / About</span>
+  <a class="nav-back" href="index.html">← Home</a>
+</nav>
+
+<div class="page-hero">
+  <div>
+    <span class="hero-tag">📍 Cummins College · Pune · 2023–2027</span>
+    <h1 class="hero-name">Who is<br><em>Shreya?</em></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-title">3rd Year · B.Tech Computer Science Engineering<br>Batch 2023–2027 · CGPA 8.7</p>
+    <p class="hero-bio">Passionate about building real-world systems using AI, computer vision, and backend technologies. Actively involved in hackathons and national innovation challenges — with an AIR 3 to show for it.</p>
+    <div class="hero-chips">
+      <span class="chip">AI &amp; ML</span><span class="chip">Computer Vision</span><span class="chip">Backend Dev</span><span class="chip">DSA</span><span class="chip">IoT</span><span class="chip">Open to Internships ✓</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 FACTS -->
+  <div class="sec-wrap reveal">
+    <div class="sec-header"><span class="sec-num">01</span><h2 class="sec-title">Quick Facts</h2></div>
+    <div class="facts-grid">
+      <div class="fact-cell"><span class="fact-lbl">Degree</span><span class="fact-val">B.Tech · Computer Science Eng.</span></div>
+      <div class="fact-cell"><span class="fact-lbl">Batch</span><span class="fact-val blue">2023 – 2027</span></div>
+      <div class="fact-cell"><span class="fact-lbl">Current Year</span><span class="fact-val">Third Year</span></div>
+      <div class="fact-cell"><span class="fact-lbl">CGPA</span><span class="fact-val green">8.7 / 10</span></div>
+      <div class="fact-cell"><span class="fact-lbl">College</span><span class="fact-val">Cummins College, Pune</span></div>
+      <div class="fact-cell"><span class="fact-lbl">Focus Areas</span><span class="fact-val">AI · CV · Backend · IoT</span></div>
+      <div class="fact-cell"><span class="fact-lbl">Projects</span><span class="fact-val blue">9 Completed</span></div>
+      <div class="fact-cell"><span class="fact-lbl">Status</span><span class="fact-val green">Open to Internships ✓</span></div>
+    </div>
+  </div>
+
+  <!-- 02 EDUCATION -->
+  <div class="sec-wrap reveal">
+    <div class="sec-header"><span class="sec-num">02</span><h2 class="sec-title">Education</h2></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">B.Tech in Computer Science Engineering</div>
+        <div class="edu-college">Cummins College of Engineering for Women, Pune</div>
+        <div class="edu-meta-row">
+          <div><span class="mlbl">Batch</span><span class="mval">2023 – 2027</span></div>
+          <div><span class="mlbl">Year</span><span class="mval">Third Year</span></div>
+          <div><span class="mlbl">CGPA</span><span class="mval cgpa">8.7</span></div>
+        </div>
+        <span class="cw-label">Relevant Coursework</span>
+        <div class="cw-tags">
+          <span class="cw-tag">Data Structures &amp; Algorithms</span>
+          <span class="cw-tag">Database Management Systems</span>
+          <span class="cw-tag">Machine Learning</span>
+          <span class="cw-tag">Computer Vision</span>
+          <span class="cw-tag">Operating Systems</span>
+          <span class="cw-tag">OOP</span>
+          <span class="cw-tag">Computer Networks</span>
+        </div>
+      </div>
+      <div class="edu-card school">
+        <div class="edu-icon">🏫</div>
+        <div class="edu-degree">School Education — Class I to XII</div>
+        <div class="edu-college">Kendriya Vidyalaya Sangathan</div>
+        <div class="edu-meta-row">
+          <div><span class="mlbl">Institution</span><span class="mval">Multiple KV Schools, Pan-India</span></div>
+        </div>
+        <p class="school-note">Completed schooling across multiple Kendriya Vidyalaya institutions across India, gaining exposure to diverse environments and developing strong adaptability and independence from an early age.</p>
+        <span class="cw-label">Key Traits Developed</span>
+        <div class="cw-tags">
+          <span class="cw-tag">Adaptability</span><span class="cw-tag">Discipline</span><span class="cw-tag">Cultural Awareness</span><span class="cw-tag">Independence</span><span class="cw-tag">Resilience</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 JOURNEY -->
+  <div class="sec-wrap reveal">
+    <div class="sec-header"><span class="sec-num">03</span><h2 class="sec-title">My Journey</h2></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">Mar 2024<br>1st Year</div>
+        <div><div class="tl-title">Science Day Ideation — 1st Place · IEEE Cummins</div><div class="tl-desc">Presented EmoCare, a stress management app concept using mood tracking and personalised suggestions. Recognised for innovation and social impact.</div><span class="tl-badge tb-gold">🥇 1st Place</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Nov 2024<br>2nd Year</div>
+        <div><div class="tl-title">RBI90 Quiz — Top 30 Maharashtra</div><div class="tl-desc">Advanced to Round 2 among thousands of participants in RBI's 90th anniversary state-level quiz. Strong knowledge of economics and banking demonstrated.</div><span class="tl-badge tb-green">Top 30 · State Level</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Feb 2025<br>3rd Year</div>
+        <div><div class="tl-title">Wabtec Exceed 3.0 — AIR 3 · ₹50,000</div><div class="tl-desc">Built a real-time railway siding safety system using RFID, GPS, Arduino and Python. Achieved All India Rank 3 at the national-level Wabtec campus challenge.</div><span class="tl-badge tb-gold">🏆 AIR 3 · National</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Apr 2025<br>3rd Year</div>
+        <div><div class="tl-title">Buffer Hackathon · 1st Place + Mastercard Finalist</div><div class="tl-desc">Won 1st place at Buffer Hackathon with SmartSpend (DSA-powered finance manager). Reached finals at Mastercard intercollege hackathon with a React Native + Django app.</div><span class="tl-badge tb-blue">🥇 1st Place + Finalist</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2026<br>Now</div>
+        <div><div class="tl-title">Building · Learning · Looking Ahead</div><div class="tl-desc">Expanding into mobile dev and cloud. Seeking internship opportunities for Summer / Fall 2026 to build impactful products with great teams.</div><span class="tl-badge tb-green">Open to Internships</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 LANGUAGES -->
+  <div class="sec-wrap reveal">
+    <div class="sec-header"><span class="sec-num">04</span><h2 class="sec-title">Languages</h2></div>
+    <div class="lang-grid">
+      <div class="lang-cell"><div class="lang-name">Hindi</div><span class="lang-level">Native</span><div class="lang-track"><div class="lang-fill" style="--w:100%"></div></div></div>
+      <div class="lang-cell"><div class="lang-name">English</div><span class="lang-level">Fluent · Professional</span><div class="lang-track"><div class="lang-fill" style="--w:92%"></div></div></div>
+      <div class="lang-cell"><div class="lang-name">Marathi</div><span class="lang-level">Basic · Learning</span><div class="lang-track"><div class="lang-fill" style="--w:35%"></div></div></div>
+      <div class="lang-cell"><div class="lang-name">German</div><span class="lang-level">Basic</span><div class="lang-track"><div class="lang-fill" style="--w:22%"></div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  <p>© 2026 Shreya · All rights reserved</p>
+  <div class="foot-links">
+    <a href="skills.html" target="_blank">Skills →</a>
+    <a href="projects.html" target="_blank">Projects →</a>
+    <a href="achievements.html" target="_blank">Achievements →</a>
+    <a href="contact.html" target="_blank">Contact →</a>
+  </div>
+</footer>
+
+<script>
+const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+// Particle bg
+const canvas=document.getElementById('bgc'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const pts=Array.from({length:45},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*1.1+.3,opacity:Math.random()*.35+.08}));
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#060d1f');bg.addColorStop(1,'#080f24');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  const grd=ctx.createRadialGradient(.2*W,.3*H,0,.2*W,.3*H,.25*Math.min(W,H));grd.addColorStop(0,'rgba(14,60,140,0.3)');grd.addColorStop(1,'transparent');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,0.016)';ctx.lineWidth=.5;
+  for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(59,154,255,${p.opacity})`;ctx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;});
+  requestAnimationFrame(draw);
+}
+draw();
+
+// Scroll reveal
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal,.lang-cell').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

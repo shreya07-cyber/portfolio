@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Shreya</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #060d1f;
+        --navy2: #0b1530;
+        --navy3: #111d3c;
+        --blue: #1a7fe8;
+        --blue2: #3b9aff;
+        --blue3: #6ab4ff;
+        --bluefog: rgba(26, 127, 232, 0.1);
+        --white: #f0f4ff;
+        --muted: #6880a8;
+        --muted2: #4a5e88;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(59, 154, 255, 0.18);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--navy);
+        color: var(--white);
+        overflow-x: hidden;
+        cursor: none;
+        min-height: 100vh;
+      }
+      #cur-dot {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--blue2);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+      }
+      #cur-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--blue3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        opacity: 0.5;
+        transition:
+          width 0.3s,
+          height 0.3s;
+      }
+      #bgc {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem 3rem;
+        background: rgba(6, 13, 31, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: -0.04em;
+      }
+      .nav-logo span {
+        color: var(--blue2);
+      }
+      .nav-center {
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-back {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+        cursor: none;
+        border: 1px solid var(--border);
+        padding: 0.35rem 0.8rem;
+        border-radius: 100px;
+      }
+      .nav-back:hover {
+        color: var(--blue2);
+        border-color: var(--border2);
+      }
+
+      .contact-wrap {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        z-index: 2;
+        padding-top: 70px;
+      }
+
+      /* LEFT */
+      .left-panel {
+        padding: 5rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px solid var(--border);
+        opacity: 0;
+        animation: fadeUp 0.7s 0.2s forwards;
+      }
+      .left-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--blue3);
+        background: rgba(26, 127, 232, 0.08);
+        border: 1px solid var(--border2);
+        padding: 0.3rem 0.8rem;
+        border-radius: 100px;
+        margin-bottom: 1.4rem;
+      }
+      .left-heading {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.5rem, 4.5vw, 4rem);
+        letter-spacing: -0.05em;
+        line-height: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      .left-heading em {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        color: var(--blue2);
+      }
+      .left-bio {
+        font-size: 0.82rem;
+        line-height: 1.85;
+        color: var(--muted);
+        max-width: 400px;
+        margin-bottom: 2.5rem;
+      }
+
+      /* CHANNELS */
+      .channels {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .channel {
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+        text-decoration: none;
+        transition:
+          padding-left 0.25s,
+          border-color 0.2s;
+      }
+      .channel:hover {
+        padding-left: 0.6rem;
+        border-bottom-color: var(--border2);
+      }
+      .ch-icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .channel:hover .ch-icon {
+        border-color: var(--border2);
+        background: rgba(26, 127, 232, 0.08);
+      }
+      .ch-lbl {
+        font-size: 0.56rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+      .ch-val {
+        font-size: 0.8rem;
+        color: var(--white);
+      }
+      .ch-arrow {
+        margin-left: auto;
+        font-size: 0.85rem;
+        color: var(--muted2);
+        transition:
+          transform 0.2s,
+          color 0.2s;
+      }
+      .channel:hover .ch-arrow {
+        transform: translate(3px, -3px);
+        color: var(--blue2);
+      }
+
+      /* STATUS */
+      .status-card {
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 1rem 1.3rem;
+        background: rgba(26, 127, 232, 0.06);
+        border: 1px solid var(--border2);
+        border-radius: 8px;
+      }
+      .s-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--blue2);
+        border-radius: 50%;
+        flex-shrink: 0;
+        animation: pulse 2.4s infinite;
+      }
+      .s-text {
+        font-size: 0.72rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .s-text strong {
+        color: var(--blue3);
+      }
+
+      /* RIGHT */
+      .right-panel {
+        padding: 5rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.4s forwards;
+      }
+      .form-heading {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 2rem;
+      }
+      .form-heading span {
+        color: var(--blue2);
+      }
+
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .field label {
+        font-size: 0.56rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        background: var(--navy2);
+        border: 1px solid var(--border);
+        padding: 0.82rem 1rem;
+        color: var(--white);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.8rem;
+        outline: none;
+        transition:
+          border-color 0.25s,
+          box-shadow 0.25s;
+        resize: none;
+        border-radius: 4px;
+      }
+      .field input:focus,
+      .field textarea:focus,
+      .field select:focus {
+        border-color: var(--border2);
+        box-shadow: 0 0 0 3px rgba(59, 154, 255, 0.06);
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: var(--muted2);
+      }
+      .field textarea {
+        height: 120px;
+      }
+      .field select {
+        cursor: none;
+      }
+      .field select option {
+        background: var(--navy2);
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.3rem;
+      }
+
+      .submit-btn {
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        padding: 0.85rem 2rem;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: all 0.25s;
+        align-self: flex-start;
+        border-radius: 100px;
+      }
+      .submit-btn:hover {
+        background: var(--blue2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(26, 127, 232, 0.3);
+      }
+      .form-note {
+        font-size: 0.62rem;
+        color: var(--muted2);
+        margin-top: 0.4rem;
+        line-height: 1.6;
+      }
+      .success-msg {
+        display: none;
+        background: rgba(74, 222, 128, 0.06);
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        padding: 1.5rem;
+        text-align: center;
+        border-radius: 4px;
+      }
+      .success-msg.show {
+        display: block;
+      }
+      .success-msg p {
+        font-size: 0.8rem;
+        color: #4ade80;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.3;
+          transform: scale(0.8);
+        }
+      }
+
+      .page-footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+      .page-footer p {
+        font-size: 0.58rem;
+        color: var(--muted2);
+      }
+      .foot-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .foot-links a {
+        font-size: 0.58rem;
+        color: var(--muted2);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+        cursor: none;
+      }
+      .foot-links a:hover {
+        color: var(--blue2);
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .contact-wrap {
+          grid-template-columns: 1fr;
+          padding-top: 65px;
+        }
+        .left-panel {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          padding: 3rem 1.5rem;
+        }
+        .right-panel {
+          padding: 3rem 1.5rem;
+        }
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+        .page-footer {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+    <canvas id="bgc"></canvas>
+
+    <nav>
+      <a class="nav-logo" href="index.html">S<span>.</span></a>
+      <span class="nav-center">05 / Contact</span>
+      <a class="nav-back" href="index.html">← Home</a>
+    </nav>
+
+    <div class="contact-wrap">
+      <div class="left-panel">
+        <span class="left-tag">Get In Touch · Open to Internships</span>
+        <h2 class="left-heading">
+          Let's build<br />something<br /><em>together.</em>
+        </h2>
+        <p class="left-bio">
+          I'm open to internship opportunities, project collaborations, and
+          interesting conversations. If you're working on something impactful —
+          let's talk.
+        </p>
+        <div class="channels">
+          <a class="channel" href="mailto:shreyad050708@gmail.com">
+            <div class="ch-icon">✉</div>
+            <div>
+              <span class="ch-lbl">Email</span
+              ><span class="ch-val">shreyad050708@gmail.com</span>
+            </div>
+            <span class="ch-arrow">↗</span>
+          </a>
+          <a
+            class="channel"
+            href="https://www.linkedin.com/in/shreya-dubey-69023a2b7/"
+            target="_blank"
+          >
+            <div class="ch-icon">in</div>
+            <div>
+              <span class="ch-lbl">LinkedIn</span
+              ><span class="ch-val"
+                >https://www.linkedin.com/in/shreya-dubey-69023a2b7/</span
+              >
+            </div>
+            <span class="ch-arrow">↗</span>
+          </a>
+          <a
+            class="channel"
+            href="https://github.com/shreya07-cyber"
+            target="_blank"
+          >
+            <div class="ch-icon">⌥</div>
+            <div>
+              <span class="ch-lbl">GitHub</span
+              ><span class="ch-val">https://github.com/shreya07-cyber</span>
+            </div>
+            <span class="ch-arrow">↗</span>
+          </a>
+        </div>
+        <div class="status-card">
+          <span class="s-dot"></span>
+          <p class="s-text">
+            Currently <strong>open to internships</strong> for Summer / Fall
+            2026. Response time: within 24 hours.
+          </p>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <h3 class="form-heading">Send a <span>message</span></h3>
+        <div class="contact-form" id="contactForm">
+          <div class="field-row">
+            <div class="field">
+              <label>First Name</label
+              ><input type="text" placeholder="Your first name" id="fname" />
+            </div>
+            <div class="field">
+              <label>Last Name</label
+              ><input type="text" placeholder="Your last name" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Email Address</label
+            ><input type="email" placeholder="your@email.com" id="email" />
+          </div>
+          <div class="field">
+            <label>Reason for Contact</label>
+            <select>
+              <option value="">— Select one —</option>
+              <option>Internship Opportunity</option>
+              <option>Project Collaboration</option>
+              <option>Hackathon Team</option>
+              <option>General Inquiry</option>
+              <option>Just saying hi!</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Message</label
+            ><textarea
+              placeholder="Tell me about your project or opportunity..."
+              id="message"
+            ></textarea>
+          </div>
+          <div>
+            <button class="submit-btn" onclick="handleSubmit()">
+              Send Message →
+            </button>
+            <p class="form-note">
+              I read every message and reply within 24 hours.
+            </p>
+          </div>
+        </div>
+        <div class="success-msg" id="successMsg">
+          <p>✓ Message sent! I'll get back to you within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <p>© 2026 Shreya · All rights reserved</p>
+      <div class="foot-links">
+        <a href="about.html" target="_blank">About →</a>
+        <a href="projects.html" target="_blank">Projects →</a>
+        <a href="achievements.html" target="_blank">Awards →</a>
+      </div>
+    </footer>
+
+    <script>
+      const dot = document.getElementById("cur-dot"),
+        ring = document.getElementById("cur-ring");
+      let mx = window.innerWidth / 2,
+        my = window.innerHeight / 2,
+        rx = mx,
+        ry = my;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      (function loop() {
+        dot.style.left = mx + "px";
+        dot.style.top = my + "px";
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(loop);
+      })();
+      const canvas = document.getElementById("bgc"),
+        ctx = canvas.getContext("2d");
+      let W, H;
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const pts = Array.from({ length: 45 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        r: Math.random() * 1.1 + 0.3,
+        opacity: Math.random() * 0.35 + 0.08,
+      }));
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#060d1f");
+        bg.addColorStop(1, "#080f24");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = "rgba(255,255,255,0.016)";
+        ctx.lineWidth = 0.5;
+        for (let x = 0; x < W; x += 80) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, H);
+          ctx.stroke();
+        }
+        for (let y = 0; y < H; y += 80) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(W, y);
+          ctx.stroke();
+        }
+        pts.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59,154,255,${p.opacity})`;
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+      async function handleSubmit() {
+        const fname = document.getElementById("fname").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const msg = document.getElementById("message").value.trim();
+        const reason = document.querySelector("select").value;
+
+        if (!fname || !email || !msg) {
+          [
+            !fname && document.getElementById("fname"),
+            !email && document.getElementById("email"),
+            !msg && document.getElementById("message"),
+          ]
+            .filter(Boolean)
+            .forEach((el) => {
+              el.style.borderColor = "rgba(244,114,182,.6)";
+              el.animate(
+                [
+                  { transform: "translateX(-4px)" },
+                  { transform: "translateX(4px)" },
+                  { transform: "translateX(0)" },
+                ],
+                { duration: 300 },
+              );
+              setTimeout(() => (el.style.borderColor = ""), 2000);
+            });
+          return;
+        }
+
+        const btn = document.querySelector(".submit-btn");
+        btn.textContent = "Sending...";
+        btn.disabled = true;
+
+        const res = await fetch("https://formspree.io/f/xgondyzq", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: fname, email, reason, message: msg }),
+        });
+
+        if (res.ok) {
+          document.getElementById("contactForm").style.display = "none";
+          document.getElementById("successMsg").classList.add("show");
+        } else {
+          btn.textContent = "Failed — Try Again";
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>
